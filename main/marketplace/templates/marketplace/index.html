@@ -8,7 +8,11 @@
         <div>
           <a href="{% url 'item:detail' item.pk %}">
             <div>
-              <img src="{{ item.image.url }}" class="rounded-t-xl" alt="" style="max-height: 442.75px; max-width: 442.75px">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" class="rounded-t-xl" alt="" style="max-height: 442.75px; max-width: 442.75px">
+              {% else %}
+                <img src="" class="rounded-t-xl" alt="Тут мало б бути зображення цього товару" style="display: block; height: 442.75px; width: 442.75px">
+              {% endif %}
             </div>
             <div class="p-6 bg-white rounded-b-xl">
               <h2 class="text-xl ">{{ item.name }}</h2>

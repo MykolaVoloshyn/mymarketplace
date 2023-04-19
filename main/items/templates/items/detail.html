@@ -3,7 +3,11 @@
 {% block content %}
   <div class="grid grid-cols-9 gap-6">
     <div class="col-span-7 bg-gray-100 rounded-xl">
-        <img src="{{ item.image.url }}" class="rounded-xl m-auto" style="max-height: 680px;" alt="">
+        {% if item.image %}
+            <img src="{{ item.image.url }}" class="rounded-xl m-auto" style="max-height: 680px;" alt="">
+        {% else %}
+            <img src="" class="rounded-t-xl" alt="Тут мало б бути зображення цього товару" style="display: block; height: 442.75px; width: 442.75px">
+        {% endif %}
     </div>
 
     <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
@@ -38,7 +42,11 @@
         <div>
           <a href="{% url 'item:detail' item.pk %}">
             <div>
-              <img src="{{ item.image.url }}" class="rounded-t-xl" alt="">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" class="rounded-t-xl" alt="">
+              {% else %}
+                <img src="" class="rounded-t-xl" alt="Тут мало б бути зображення цього товару" style="display: inline-block;">
+              {% endif %}
             </div>
             <div class="p-6 bg-white rounded-b-xl">
               <h2 class="text-xl ">{{ item.name }}</h2>
