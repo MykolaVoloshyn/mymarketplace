@@ -60,6 +60,9 @@ def new_item(request):
 @login_required
 def delete_item(request, pk):
     item = get_object_or_404(Item, pk=pk, owner=request.user)
+    if item.image:
+        item.image.delete()
+
     item.delete()
 
     return redirect('dashboard:owner_stuff')
