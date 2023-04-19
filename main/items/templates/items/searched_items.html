@@ -1,0 +1,46 @@
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+  <div class="pb-6 grid grid-cols-4 gap-6 ">
+    <div class="col-span-1 bg-gray-100 rounded-xl">
+      <form method="get" action="{% url 'item:searched_items' %}">
+        <input name="query" class="m-2 p-3 border rounded-xl" type="text" value="{{ query }}" style="width:96%">
+
+        <button class="m-2 py-3 px-8 text-lg bg-teal-500 text-white rounded-xl">Пошук</button>
+      </form>
+
+      <hr class="my-6">
+      <p class="ml-2 font-semibold">Категорії</p>
+      <ul>
+        {% for category in categories %}
+        <li class="ml-2 py-2 px-2 rounded-xl {% if category.pk == category_id %}bg-gray-200{% endif %}">
+          <a href="{% url 'item:searched_items' %}?query={{ query }}&category={{ category.pk }}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      <hr class="my-6">
+      <p class="font-semibold ml-2">Скинути фільтри</p>
+      <ul>
+        <li><a href="{% url 'item:searched_items' %}" class="mt-2 ml-2 py-3 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Скинути</a></li>
+      </ul>
+    </div>
+    <div class="col-span-3 bg-gray-100 rounded-xl">
+      <div class="grid grid-cols-3 gap-3">
+      {% for item in items %}
+        <div>
+          <a href="{% url 'item:detail' item.pk %}">
+            <div>
+              <img src="{{ item.image.url }}" class="rounded-t-xl" alt="" style="max-height: 453.75px; max-width: 453.75px">
+            </div>
+            <div class="p-6 bg-white rounded-b-xl">
+              <h2 class="text-xl ">{{ item.name }}</h2>
+              <p class="text-gray-500">Price: {{ item.price }} грн.</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+
+{% endblock %}

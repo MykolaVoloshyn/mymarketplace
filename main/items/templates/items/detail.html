@@ -1,0 +1,53 @@
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+  <div class="grid grid-cols-9 gap-6">
+    <div class="col-span-7 bg-gray-100 rounded-xl">
+        <img src="{{ item.image.url }}" class="rounded-xl m-auto" style="max-height: 680px;" alt="">
+    </div>
+
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <div style="min-height: 456px;">
+            <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
+            <p class="text-gray-700"><strong>Price: {{ item.price }} грн.</strong></p>
+            <p class="text-gray-700"><strong>Seller: {{ item.owner }}</strong></p>
+
+            {% if item.description %}
+            <p class="text-gray-700"><strong>Description: {{ item.description }}</strong></p>
+            {% endif %}
+        </div>
+
+        <div class="mt-6 p-6 bg-white rounded-xl">
+            {% if request.user == item.owner %}
+                <p>Це ваш предмет</p>
+                <a href="{% url 'item:edit_item' item.pk %}" class="inline-block mt-6 mr-5 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Редагувати</a>
+                <a href="{% url 'item:delete_item' item.pk %}" class="inline-block mt-6  px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Видалити</a>
+            {% else %}
+                <p>Дізнатись більше про продавця</p>
+                <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">{{ item.owner }}</a>
+            {% endif %}
+        </div>
+    </div>
+  </div>
+
+  {% if related_items %}
+  <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Схожі товари</h2>
+    <div class="grid grid-cols-4 gap-3">
+      {% for item in related_items %}
+        <div>
+          <a href="{% url 'item:detail' item.pk %}">
+            <div>
+              <img src="{{ item.image.url }}" class="rounded-t-xl" alt="">
+            </div>
+            <div class="p-6 bg-white rounded-b-xl">
+              <h2 class="text-xl ">{{ item.name }}</h2>
+              <p class="text-gray-500">Price: {{ item.price }} грн.</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}
